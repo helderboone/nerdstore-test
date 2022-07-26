@@ -11,20 +11,23 @@ namespace NerdStore.Vendas.Domain
         public static int MAX_UNIDADES_ITEM => 15;
         public static int MIN_UNIDADES_ITEM => 1;
 
+        public int Codigo { get; private set; }
+        public Guid ClienteId { get; private set; }
+        public Guid? VoucherId { get; private set; }
+        public decimal ValorTotal { get; private set; }
+        public PedidoStatus PedidoStatus { get; private set; }
+        public decimal Desconto { get; private set; }
+        public DateTime DataCadastro { get; private set; }
+        public bool VoucherUtilizado { get; private set; }
+        public Voucher Voucher { get; private set; }
+
+        private readonly List<PedidoItem> _pedidoItems;
+        public IReadOnlyCollection<PedidoItem> PedidoItems => _pedidoItems;
+
         protected Pedido()
         {
             _pedidoItems = new List<PedidoItem>();
         }
-
-        public Guid ClientId { get; private set; }
-
-        public decimal ValorTotal { get; private set; }
-        public decimal Desconto { get; private set; }
-        public PedidoStatus PedidoStatus { get; private set; }
-        public bool VoucherUtilizado { get; private set; }
-        public Voucher Voucher { get; private set; }
-        private readonly List<PedidoItem> _pedidoItems;
-        public IReadOnlyCollection<PedidoItem> PedidoItems => _pedidoItems;
 
         public ValidationResult AplicarVoucher(Voucher voucher)
         {
@@ -33,8 +36,7 @@ namespace NerdStore.Vendas.Domain
 
             Voucher = voucher;
             VoucherUtilizado = true;
-
-            CalcularValorTotalDesconto();
+            CalcularValorPedido();
 
             return result;
         }
@@ -106,7 +108,7 @@ namespace NerdStore.Vendas.Domain
             if (!PedidoItemExistente(pedidoItem)) throw new DomainException("O Item não existe no pedido");
         }
 
-        private void CalcularValorPedido()
+        public void CalcularValorPedido()
         {
             ValorTotal = _pedidoItems.Sum(i => i.CalcularValor());
             CalcularValorTotalDesconto();
@@ -123,7 +125,7 @@ namespace NerdStore.Vendas.Domain
             {
                 var pedido = new Pedido
                 {
-                    ClientId = clienteId
+                    ClienteId = clienteId
                 };
 
                 pedido.TornarRascunho();
@@ -141,6 +143,12 @@ namespace NerdStore.Vendas.Domain
             _pedidoItems.Remove(itemExistente);
             _pedidoItems.Add(pedidoItem);
             CalcularValorPedido();
+        }
+
+        public void AtualizarUnidades(PedidoItem item, int unidades)
+        {
+            item.AtualizarUnidades(unidades);
+            AtualizarItem(item);
         }
 
         public void RemoverItem(PedidoItem pedidoItem)
