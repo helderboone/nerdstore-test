@@ -7,21 +7,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NerdStore.WebApp.MVC.Data;
 
-[assembly: HostingStartup(typeof(NerdStore.WebApp.MVC.Areas.Identity.IdentityHostingStartup))]
-namespace NerdStore.WebApp.MVC.Areas.Identity
-{
-    public class IdentityHostingStartup : IHostingStartup
-    {
-        public void Configure(IWebHostBuilder builder)
-        {
-            builder.ConfigureServices((context, services) => {
-                services.AddDbContext<AuthDbContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("DefaultConnection")));
+//[assembly: HostingStartup(typeof(NerdStore.WebApp.MVC.Areas.Identity.IdentityHostingStartup))]
+//namespace NerdStore.WebApp.MVC.Areas.Identity
+//{
+//    public class IdentityHostingStartup : IHostingStartup
+//    {
+//        public void Configure(IWebHostBuilder builder)
+//        {
+//            //builder.ConfigureServices((context, services) => {
+//            //    services.AddDbContext<AuthDbContext>(options =>
+//            //        options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<AuthDbContext>();
-            });
-        }
-    }
-}
+//            //    services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//            //        .AddEntityFrameworkStores<AuthDbContext>();
+//            //});
+//        }
+//    }
+//}
