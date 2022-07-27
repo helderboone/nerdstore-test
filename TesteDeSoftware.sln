@@ -35,13 +35,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NerdStore.Vendas.Domain.Tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Testes de Integracao", "03 - Testes de Integracao", "{E35E899B-E425-414E-8DFE-DAF58475BA5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NerdStore.Catalogo.Application", "03 - Testes de Integracao\src\NerdStore.Catalogo.Application\NerdStore.Catalogo.Application.csproj", "{D6B5464A-7CD9-49BB-B6E6-731B388132D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NerdStore.Catalogo.Application", "03 - Testes de Integracao\src\NerdStore.Catalogo.Application\NerdStore.Catalogo.Application.csproj", "{D6B5464A-7CD9-49BB-B6E6-731B388132D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NerdStore.Catalogo.Data", "03 - Testes de Integracao\src\NerdStore.Catalogo.Data\NerdStore.Catalogo.Data.csproj", "{FAE08A97-2F11-4E32-805B-6797ADDD8019}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NerdStore.Catalogo.Data", "03 - Testes de Integracao\src\NerdStore.Catalogo.Data\NerdStore.Catalogo.Data.csproj", "{FAE08A97-2F11-4E32-805B-6797ADDD8019}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NerdStore.Catalogo.Domain", "03 - Testes de Integracao\src\NerdStore.Catalogo.Domain\NerdStore.Catalogo.Domain.csproj", "{F01A3D5E-ADFB-4CF2-97B7-CF7F06B8D79C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NerdStore.Catalogo.Domain", "03 - Testes de Integracao\src\NerdStore.Catalogo.Domain\NerdStore.Catalogo.Domain.csproj", "{F01A3D5E-ADFB-4CF2-97B7-CF7F06B8D79C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NerdStore.WebApp.MVC", "03 - Testes de Integracao\src\NerdStore.WebApp.MVC\NerdStore.WebApp.MVC.csproj", "{422006BF-7FCA-4E13-A317-6F2AD2210382}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NerdStore.WebApp.MVC", "03 - Testes de Integracao\src\NerdStore.WebApp.MVC\NerdStore.WebApp.MVC.csproj", "{422006BF-7FCA-4E13-A317-6F2AD2210382}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration Tests", "Integration Tests", "{9B073F34-7587-43D0-83DF-F42210FE91A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NerdStore.WebApp.Tests", "03 - Testes de Integracao\tests\NerdStore.WebApp.Tests\NerdStore.WebApp.Tests.csproj", "{BD3F40CA-8AE1-4167-9E8C-654D85939767}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +109,10 @@ Global
 		{422006BF-7FCA-4E13-A317-6F2AD2210382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{422006BF-7FCA-4E13-A317-6F2AD2210382}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{422006BF-7FCA-4E13-A317-6F2AD2210382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3F40CA-8AE1-4167-9E8C-654D85939767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3F40CA-8AE1-4167-9E8C-654D85939767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3F40CA-8AE1-4167-9E8C-654D85939767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3F40CA-8AE1-4167-9E8C-654D85939767}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,6 +135,8 @@ Global
 		{FAE08A97-2F11-4E32-805B-6797ADDD8019} = {E35E899B-E425-414E-8DFE-DAF58475BA5B}
 		{F01A3D5E-ADFB-4CF2-97B7-CF7F06B8D79C} = {E35E899B-E425-414E-8DFE-DAF58475BA5B}
 		{422006BF-7FCA-4E13-A317-6F2AD2210382} = {E35E899B-E425-414E-8DFE-DAF58475BA5B}
+		{9B073F34-7587-43D0-83DF-F42210FE91A7} = {E35E899B-E425-414E-8DFE-DAF58475BA5B}
+		{BD3F40CA-8AE1-4167-9E8C-654D85939767} = {9B073F34-7587-43D0-83DF-F42210FE91A7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB13E196-2311-4EC2-8D82-2D5308D4FC64}
