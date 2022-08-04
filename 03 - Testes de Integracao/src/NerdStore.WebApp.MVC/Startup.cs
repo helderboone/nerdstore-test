@@ -52,7 +52,6 @@ namespace NerdStore.WebApp.MVC
 
             services.AddHttpContextAccessor();
 
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
