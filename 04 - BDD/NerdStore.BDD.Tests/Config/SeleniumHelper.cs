@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using ExptectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace NerdStore.BDD.Tests.Config
@@ -26,67 +27,118 @@ namespace NerdStore.BDD.Tests.Config
         {
             return WebDriver.Url;
         }
-
+        
         public void IrParaUrl(string url)
         {
             WebDriver.Navigate().GoToUrl(url);
         }
+       
+        public bool ValidarConteudoUrl(string conteudo)
+        {
+            return Wait.Until(ExptectedConditions.UrlContains(conteudo));
+        }
 
         public void ClicarLinkPorTexto(string linkText)
         {
-            Wait.Until(ExptectedConditions.ElementIsVisible(By.LinkText(linkText))).Click();
+            var link = Wait.Until(ExptectedConditions.ElementIsVisible(By.LinkText(linkText)));
+            link.Click();
+        }
+
+        public void ClicarBotaoPorId(string botaoId)
+        {
+            var botao = Wait.Until(ExptectedConditions.ElementIsVisible(By.Id(botaoId)));
+            botao.Click();
+        }
+
+        public void ClicarPorXPath(string xPath)
+        {
+            var elemento = Wait.Until(ExptectedConditions.ElementIsVisible(By.XPath(xPath)));
+            elemento.Click();
+        }
+
+        public IWebElement ObterElementoPorClasse(string classeCss)
+        {
+            return Wait.Until(ExptectedConditions.ElementIsVisible(By.ClassName(classeCss)));
+        }
+
+        public IWebElement ObterElementoPorXPath(string xPath)
+        {
+            return Wait.Until(ExptectedConditions.ElementIsVisible(By.XPath(xPath)));
+        }
+
+        public void PreencherTextBoxPorId(string idCampo, string valorCampo)
+        {
+            var campo = Wait.Until(ExptectedConditions.ElementIsVisible(By.Id(idCampo)));
+            campo.SendKeys(valorCampo);
+        }
+
+        public void PreencherDropdownPorId(string idCampo, string valorCampo)
+        {
+            var campo = Wait.Until(ExptectedConditions.ElementIsVisible(By.Id(idCampo)));
+            var selectElement = new SelectElement(campo);
+            selectElement.SelectByValue(valorCampo);
+        }
+
+        public string ObterTextoElementoPorClasseCss(string className)
+        {
+            return Wait.Until(ExptectedConditions.ElementIsVisible(By.ClassName(className))).Text;
+        }
+
+        public string ObterTextoElementoPoId(string id)
+        {
+            return Wait.Until(ExptectedConditions.ElementIsVisible(By.Id(id))).Text;
+        }
+
+        public string ObterValorTextBoxPorId(string id)
+        {
+            return Wait.Until(ExptectedConditions.ElementIsVisible(By.Id(id))).GetAttribute("value");
+        }
+
+        public IEnumerable<IWebElement> ObterListaPorClasse(string className)
+        {
+            return Wait.Until(ExptectedConditions.PresenceOfAllElementsLocatedBy(By.ClassName(className)));
+        }
+
+        public bool ValidarSeElementoExistePorId(string id)
+        {
+            return ElementoExistente(By.Id(id));
+        }
+
+        public void VoltarNavegacao(int vezes = 1)
+        {
+            for (int i = 0; i < vezes; i++)
+            {
+                WebDriver.Navigate().Back();
+            }
+        }
+
+        public void ObterScreenShot(string nome)
+        {
+            SalvarScreenShot(WebDriver.TakeScreenshot(), string.Format("{0}_" + nome + ".png", DateTime.Now.ToFileTime()));
+        }
+
+        private void SalvarScreenShot(Screenshot screenshot, string fileName)
+        {
+            screenshot.SaveAsFile($"{Configuration.FolderPicture}{fileName}", ScreenshotImageFormat.Png);
+        }
+
+        private bool ElementoExistente(By by)
+        {
+            try
+            {
+                WebDriver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
         }
 
         public void Dispose()
         {
-        }
-    }
-
-    public class ConfigurationHelper
-    {
-        private readonly IConfiguration _config;
-
-        public ConfigurationHelper()
-        {
-            _config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-        }
-
-        public string WebDrivers => $"{_config.GetSection("WebDrivers").Value}";
-    }
-
-    public enum Browser
-    {
-        Chrome,
-        Firefox
-    }
-
-    public static class WebDriverFactory
-    {
-        public static IWebDriver CreateWebDriver(Browser browser, string caminhoDriver, bool headless)
-        {
-            IWebDriver webDriver = null;
-
-            switch (browser)
-            {
-                case Browser.Firefox:
-                    var optionsFireFox = new FirefoxOptions();
-                    if (headless)
-                        optionsFireFox.AddArgument("--headless");
-
-                    webDriver = new FirefoxDriver(caminhoDriver, optionsFireFox);
-                    break;
-                case Browser.Chrome:
-                    var options = new ChromeOptions();
-                    if (headless)
-                        options.AddArgument("--headless");
-
-                    webDriver = new ChromeDriver(caminhoDriver, options);
-                    break;
-            }
-
-            return webDriver;
+            WebDriver.Quit();
+            WebDriver.Dispose();
         }
     }
 }
