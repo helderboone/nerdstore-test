@@ -84,7 +84,7 @@ namespace NerdStore.BDD.Tests.Config
             return Wait.Until(ExptectedConditions.ElementIsVisible(By.ClassName(className))).Text;
         }
 
-        public string ObterTextoElementoPoId(string id)
+        public string ObterTextoElementoPorId(string id)
         {
             return Wait.Until(ExptectedConditions.ElementIsVisible(By.Id(id))).Text;
         }
